@@ -1,0 +1,6 @@
+<section class="imageUpload">
+  <div class="col-sm-12 mainHeading">
+    <h4>{{headings}}</h4>
+  </div>
+  <app-uploader (newImage)="updateImage($event)" [previousImage]="previousImage" [size]="displaySize"></app-uploader>
+</section>

@@ -1,0 +1,51 @@
+<section id="settings">
+  <div class="container">
+    <div class="row">
+      <!-- <div class="col-sm-12 mainHeading">
+        <h3 class="text-center">
+          Settings
+        </h3>
+      </div> -->
+      <div class="col-sm-8">
+        <div class="col-sm-12 inputFields">
+          <div class="col-sm-12 mainHeading">
+            <h4>Register Form fields</h4>
+          </div>
+          <div class="col-sm-4 singleField" *ngFor="let field of settings.inputFields">
+              <mat-checkbox [(ngModel)]="field.display">{{field.label}}</mat-checkbox>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 pageIcon">
+        <app-file-uploader [headings]="'Page Icon'" [previousImage]="settings.pageIcon" (newImage)="updatePageIcon($event)" [displaySize]="'small'"></app-file-uploader>
+      </div>
+      <div class="col-sm-6 landingTitle">
+        <app-dynamic-text [headings]="'Page Title'" [content]="settings.landingPageTitle" (updatedContent)="updateLandingTitle($event)" [title]="true"></app-dynamic-text>
+      </div>
+      <div class="col-sm-6 landingDescription">
+        <app-dynamic-text [headings]="'Page Description'" [content]="settings.landingDescription" (updatedContent)="updateLandingDescription($event)"></app-dynamic-text>
+      </div>
+      <div class="col-sm-6 landingFooter">
+        <app-dynamic-text [headings]="'Footer Description'" [content]="settings.landingFooter" (updatedContent)="updateLandingFooter($event)" [fillColor]="true"></app-dynamic-text>
+      </div>
+      <div class="col-sm-6 registerButton">
+        <app-dynamic-text [headings]="'Register Button'" [content]="settings.registerButton" (updatedContent)="updateRegisterButton($event)" [fillColor]="true"></app-dynamic-text>
+      </div>
+      <div class="col-sm-6 termsDescription">
+        <app-dynamic-text [headings]="'Terms of Service'" [content]="settings.termOfService" (updatedContent)="updateTerms($event)"></app-dynamic-text>
+      </div>
+      <div class="col-sm-6 uploader">
+        <app-file-uploader [headings]="'Business Logo'" [previousImage]="settings.businessLogo" (newImage)="updateBusinessLogo($event)" [displaySize]="'medium'"></app-file-uploader>
+      </div>
+      <div class="col-sm-12 termsLink">
+        <app-term-service [link]="settings.termsLink" (newLink)="updateLink($event)"></app-term-service>
+      </div>
+      <div class="col-sm-12 background">
+        <app-background [background]="settings.background" (updatedBackground)="updateBack($event)"></app-background>
+      </div>
+      <div class="col-sm-12 actionButton">
+          <button mat-raised-button (click)="saveSettings()">Save Settings</button>
+      </div>
+    </div>
+  </div>
+</section>

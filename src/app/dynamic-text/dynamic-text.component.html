@@ -1,0 +1,41 @@
+<div class="dynamicTitle">
+  <div class="col-sm-12 mainHeading">
+    <h4>{{headings}}</h4>
+  </div>
+  <div class="col-sm-12 titleFont">
+    <div class="row">
+      <div class="col-sm-12 title">
+        <mat-form-field class="title" *ngIf="title">
+          <input matInput placeholder="Title" [ngModel]="content.title" (ngModelChange)="updateTitle($event)" />
+        </mat-form-field>
+        <mat-form-field class="title" *ngIf="!title && content">
+          <textarea matInput placeholder="Description"[ngModel]="content.description" (ngModelChange)="updateDescription($event)"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 fontWeight">
+        <mat-label>Font Weight</mat-label>
+        <mat-select [ngModel]="selectedFont" (ngModelChange)="updateSelect($event)">
+          <mat-option *ngFor="let font of fontSelects" [value]="font">
+            {{font}}
+          </mat-option>
+        </mat-select>
+      </div>
+      <div class="col-sm-6 fontSize">
+        <mat-label>Font Size</mat-label>
+        <mat-select [ngModel]="selectedFontSize" (ngModelChange)="updateFontSize($event)">
+          <mat-option *ngFor="let font of fontSize" [value]="font">
+            {{font}}
+          </mat-option>
+        </mat-select>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 colorSelection">
+    <p>Font color</p>
+    <color-compact color="#333" (onChangeComplete)="handleChange($event)"></color-compact>
+  </div>
+  <div class="col-sm-6 colorSelection" *ngIf="fillColor">
+    <p>Background color</p>
+    <color-compact color="#333" (onChangeComplete)="handleBackgroundColor($event)"></color-compact>
+  </div>
+</div>

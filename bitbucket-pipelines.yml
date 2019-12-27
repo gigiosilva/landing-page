@@ -1,0 +1,41 @@
+clone:
+  depth: full
+pipelines:
+  default:
+    - step:
+        name: Build and Test
+        image: node:10.15.3
+        caches:
+          - node
+        script:
+          - npm install
+          # - npm test
+  branches:
+    beta:
+      - step:
+          name: Build and Test
+          image: node:10.15.3
+          caches:
+            - node
+          script:
+            - npm install
+            # - npm test
+      - step:
+          name: Publish Beta
+          deployment: staging
+          script:
+            - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/eaglecatch-landing-page-qas.git HEAD:master
+    master:
+      - step:
+          name: Build and Test
+          image: node:10.15.3
+          caches:
+            - node
+          script:
+            - npm install
+            # - npm test
+      - step:
+          name: Publish Prod
+          deployment: production
+          script:
+            - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/eaglecatch-landing-page.git HEAD:master

@@ -1,0 +1,50 @@
+<section class="landingPage" [style.background]="backgroundImage" [style.background-color]="settings.background.color">
+  <div class="topSection col-sm-12">
+    <div class="col-sm-6 logo">
+      <div class="logoHere">
+        <img src="{{settings.businessLogo}}" alt="logo" *ngIf="settings.businessLogo">
+      </div>
+    </div>
+    <div class="loginBtn col-sm-6">
+        <button mat-stroked-button>Login</button>
+    </div>
+  </div>
+  <div class="col-sm-12 mainContent">
+    <div class="contentHere">
+      <div class="col-sm-12 mainTitle">
+        <h3 [style.color]="settings.landingPageTitle.color" [style.font-weight]="settings.landingPageTitle.font" [style.font-size]="settings.landingPageTitle.fontSize" class="titleHead">{{settings.landingPageTitle.title}}</h3>
+        <p [style.color]="settings.landingDescription.color" [style.font-weight]="settings.landingDescription.font" [style.font-size]="settings.landingDescription.fontSize">{{settings.landingDescription.description}}</p>
+      </div>
+      <div class="col-sm-12 registerForm">
+        <form name="registerForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+          <div class="col-sm-6" *ngFor="let field of settings.inputFields">
+            <div *ngIf="field.display" class="registerField">
+              <mat-form-field *ngIf="field.status == 'input' && field.required">
+                <input matInput type="field.type" placeholder="{{field.label}}" class="form-control" name="{{field.title}}" [(ngModel)]="field.value" required>
+              </mat-form-field>
+              <mat-form-field *ngIf="field.status == 'input' && !field.required">
+                <input matInput type="field.type" placeholder="{{field.label}}" class="form-control" name="{{field.title}}" [(ngModel)]="field.value">
+              </mat-form-field>
+              <mat-radio-group class="form-control" name="{{field.title}}" [(ngModel)]="field.value" *ngIf="field.status == 'checkbox'">
+                <mat-radio-button value="Male">Male</mat-radio-button>
+                <mat-radio-button value="Female">Female</mat-radio-button>
+              </mat-radio-group>
+              <mat-form-field *ngIf="field.status == 'textarea'">
+                <textarea matInput placeholder="{{field.label}}" [(ngModel)]="field.value" name="field.title" class="form-control"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="actionBtn col-sm-12">
+            <button mat-raised-button type="submit" [style.color]="settings.registerButton.color" [style.background]="settings.registerButton.fillColor" [style.font-weight]="settings.registerButton.font" [style.font-size]="settings.registerButton.fontSize">{{settings.registerButton.description}}</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-12 termService">
+        <p [style.color]="settings.termOfService.color" [style.font-weight]="settings.termOfService.font" [style.font-size]="settings.termOfService.fontSize">{{settings.termOfService.description}} <a href="{{settings.termsLink}}">Terms of Service</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+<footer [style.background]="settings.landingFooter.fillColor">
+  <p [style.color]="settings.landingFooter.color" [style.font-weight]="settings.landingFooter.font" [style.font-size]="settings.landingFooter.fontSize">{{settings.landingFooter.description}}</p>
+</footer>

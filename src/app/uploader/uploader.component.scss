@@ -1,0 +1,27 @@
+.uploader{
+    input{
+        display: none;
+    }
+    .imagePreview{
+        img{
+            width: 100%;
+        }
+    }
+}
+.small{
+    .imagePreview{
+        width: 15%;
+        margin: auto;
+        margin-bottom: 20%
+    }
+}
+.medium{
+    .imagePreview{
+        width: 30%;
+        margin: auto;
+    }
+}
+.uploaderBtn{
+    text-align: center;
+    margin-top: 10px;
+}
