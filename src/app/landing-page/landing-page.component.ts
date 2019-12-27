@@ -62,15 +62,6 @@ export class LandingPageComponent implements OnInit {
         title: 'email'
       },
       {
-        label: 'Country',
-        required: false,
-        display: true,
-        status: 'input',
-        type: 'text',
-        value:'',
-        title: 'country'
-      },
-      {
         label: 'ZIP Code',
         required: false,
         display: true,
@@ -78,6 +69,15 @@ export class LandingPageComponent implements OnInit {
         type: 'text',
         value:'',
         title: 'zip'
+      },
+      {
+        label: 'Country',
+        required: false,
+        display: true,
+        status: 'input',
+        type: 'text',
+        value:'',
+        title: 'country'
       },
       {
         label: 'State',
