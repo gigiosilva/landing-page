@@ -2,16 +2,14 @@ section{
     float: left;
     width: 100%;
     padding: 40px;
+    .logo {
+        display: flex;
+        justify-content: center;
+    }
     .logoHere{
-        width: 200px;
+        width: 350px;
         img{
             width: 100%;
-        }
-    }
-    .loginBtn{
-        text-align: right;
-        button{
-            color: #fff;
         }
     }
     .mainContent{
@@ -47,9 +45,9 @@ section{
                     text-align: center;
                     margin-top: 20px;
                     button{
-                        width: 100%;
-                        padding: 10px;
-                        border-radius: 1px;
+                        // width: 100%;
+                        // padding: 10px;
+                        border-radius: 30px;
                     }
                 }
             }

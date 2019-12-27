@@ -4,13 +4,13 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SettingPageComponent } from './setting-page/setting-page.component';
 
 const routes: Routes = [
-    { path: '', component: SettingPageComponent},
+    { path: '', component: LandingPageComponent},
     { path: 'landing', component: LandingPageComponent},
     { path: 'settings', component: SettingPageComponent}
 ];
 
 @NgModule({    
-    imports: [RouterModule.forRoot(routes, {useHash: true})],
+    imports: [RouterModule.forRoot(routes, {useHash: false})],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }
