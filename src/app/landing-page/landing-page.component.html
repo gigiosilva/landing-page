@@ -1,4 +1,4 @@
-<section class="landingPage" [style.background]="backgroundImage" [style.background-color]="settings.background.color">
+<section class="landingPage" [style.background]="backgroundImage" [style.background-color]="backgroundColor.backgroundColor">
   <div class="topSection col-sm-12">
     <div class="col-sm-12 logo">
       <div class="logoHere">
@@ -9,39 +9,29 @@
   <div class="col-sm-12 mainContent">
     <div class="contentHere">
       <div class="col-sm-12 mainTitle">
-        <h3 [style.color]="settings.landingPageTitle.color" [style.font-weight]="settings.landingPageTitle.font" [style.font-size]="settings.landingPageTitle.fontSize" class="titleHead">{{settings.landingPageTitle.title}}</h3>
-        <p [style.color]="settings.landingDescription.color" [style.font-weight]="settings.landingDescription.font" [style.font-size]="settings.landingDescription.fontSize">{{settings.landingDescription.description}}</p>
+        <h3 [style.color]="pageTitle.color" style.font-size="{{pageTitle.size}}px" class="titleHead">{{pageTitle.text}}</h3>
+        <p [style.color]="pageDescription.color" style.font-size="{{pageDescription.size}}px">{{pageDescription.text}}</p>
       </div>
       <div class="col-sm-12 registerForm">
         <form name="registerForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
           <div class="col-sm-6" *ngFor="let field of settings.inputFields">
-            <div *ngIf="field.display" class="registerField">
-              <mat-form-field *ngIf="field.status == 'input' && field.required">
-                <input matInput type="field.type" placeholder="{{field.label}}" class="form-control" name="{{field.title}}" [(ngModel)]="field.value" required>
-              </mat-form-field>
-              <mat-form-field *ngIf="field.status == 'input' && !field.required">
-                <input matInput type="field.type" placeholder="{{field.label}}" class="form-control" name="{{field.title}}" [(ngModel)]="field.value">
-              </mat-form-field>
-              <mat-radio-group class="form-control" name="{{field.title}}" [(ngModel)]="field.value" *ngIf="field.status == 'checkbox'">
-                <mat-radio-button value="Male">Male</mat-radio-button>
-                <mat-radio-button value="Female">Female</mat-radio-button>
-              </mat-radio-group>
-              <mat-form-field *ngIf="field.status == 'textarea'">
-                <textarea matInput placeholder="{{field.label}}" [(ngModel)]="field.value" name="field.title" class="form-control"></textarea>
+            <div *ngIf="field.active" class="registerField">
+              <mat-form-field *ngIf="field.active">
+                <input matInput placeholder="{{field.field.name}}" class="form-control" name="{{field}}" [(ngModel)]="field.text">
               </mat-form-field>
             </div>
           </div>
           <div class="actionBtn col-sm-12">
-            <button mat-raised-button type="submit" [style.color]="settings.registerButton.color" [style.background]="settings.registerButton.fillColor" [style.font-weight]="settings.registerButton.font" [style.font-size]="settings.registerButton.fontSize">{{settings.registerButton.description}}</button>
+            <button mat-raised-button type="submit" [style.color]="pageButton.color" [style.background]="pageButton.backgroundColor" style.font-size="{{pageButton.size}}px">{{pageButton.text}}</button>
           </div>
         </form>
       </div>
-      <div class="col-sm-12 termService">
+      <!-- <div class="col-sm-12 termService">
         <p [style.color]="settings.termOfService.color" [style.font-weight]="settings.termOfService.font" [style.font-size]="settings.termOfService.fontSize">{{settings.termOfService.description}} <a href="{{settings.termsLink}}">Terms of Service</a></p>
-      </div>
+      </div> -->
     </div>
   </div>
 </section>
-<footer [style.background]="settings.landingFooter.fillColor">
+<!-- <footer [style.background]="settings.landingFooter.fillColor">
   <p [style.color]="settings.landingFooter.color" [style.font-weight]="settings.landingFooter.font" [style.font-size]="settings.landingFooter.fontSize">{{settings.landingFooter.description}}</p>
-</footer>
+</footer> -->
