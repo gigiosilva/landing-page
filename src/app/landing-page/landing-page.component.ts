@@ -18,7 +18,7 @@ export class LandingPageComponent implements OnInit {
   private idBusiness: number;
   public backgroundImage = null;
   public settings: any = {};
-  public designFields: Object = {};
+  public designFields: any = {};
   public loading = true;
   public completed = false;
 
