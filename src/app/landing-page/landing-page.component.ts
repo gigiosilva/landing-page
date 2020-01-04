@@ -4,6 +4,8 @@ import { DOCUMENT } from '@angular/platform-browser';
 import { Inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { getToken } from '@angular/router/src/utils/preactivation';
+import { IntlService } from '../intl.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -12,52 +14,62 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LandingPageComponent implements OnInit {
 
+  public translate: any;
   private idBusiness: number;
-  backgroundImage = null;
-  backgroundColor: Object = {};
-  pageTitle: Object = {};
-  pageDescription: Object = {};
-  pageButton: Object = {};
-  termsService: Object = {};
+  public backgroundImage = null;
   public settings: any = {};
+  public designFields: any = {};
+  public loading = true;
+  public completed = false;
 
   constructor(
     @Inject(DOCUMENT) public _document: HTMLDocument, 
     public sanitizer: DomSanitizer,
     private landingPageService: LandingPageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private intlService: IntlService,
   ) {
     this.idBusiness = this.route.snapshot.params.id;
+    this.translate = this.intlService.getIntl();
   }
 
   ngOnInit() {
     this.landingPageService.getSettings(this.idBusiness).subscribe(settings => {
       this.settings = settings.landingSettings;
-      this.getGeneralFields();
+      this.generateDesignField();
+      this.setPageIcon();
+      this.loading = false;
     });
   }
 
-  onSubmit(){
-    console.log(this.settings.inputFields);
-  }
-
-  setSettingsValue(settings){
+  setSettingsValue(settings) {
     this.settings = JSON.parse(settings);
     if(this.settings.background.imageUrl){
       this.backgroundImage = this.sanitizer.bypassSecurityTrustStyle(`url(${this.settings.background.imageUrl}) no-repeat`);
     }
   }
 
-  setPageIcon(){
-    this._document.getElementById('appFavicon').setAttribute('href', this.settings.pageIcon);
+  setPageIcon() {
+    this._document.getElementById('appFavicon').setAttribute('href', this.designFields["icon"].link);
   }
 
-  getGeneralFields() {
-    this.backgroundColor = this.settings.designFields.find( setting => setting.field.name === 'BACKGROUND');
-    this.pageTitle = this.settings.designFields.find( setting => setting.field.name === 'TITLE');
-    this.pageDescription = this.settings.designFields.find( setting => setting.field.name === 'DESCRIPTION');
-    this.pageButton = this.settings.designFields.find( setting => setting.field.name === 'BUTTON');
-    this.termsService = this.settings.designFields.find( setting => setting.field.name === 'BUTTON');
+  generateDesignField() {
+    this.designFields = this.settings.designFields.reduce((fields, setting) => {
+      fields[setting.field.name.toLowerCase()] = setting;
+      return fields;
+    }, {});
   }
 
+  saveContact(form) {
+    console.log(form);
+    this.completed = true;
+    this.restart();
+  }
+
+  restart() {
+    setTimeout(_=> {
+      this.completed = false;
+      location.reload();
+    }, 5000);
+  }
 }
