@@ -1,5 +1,7 @@
+import { LandingPageService } from './landing-page/landing-page.service';
+import { IntlService } from './intl.service';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
@@ -11,14 +13,22 @@ import { ColorSketchModule } from 'ngx-color/sketch';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ColorCompactModule } from 'ngx-color/compact';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,    
-    LandingPageComponent   
+    LandingPageComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +43,28 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     MatSelectModule,
     MatCardModule,
     ColorCompactModule,
-    MatRadioModule
+    MatRadioModule,
+    MatButtonToggleModule,
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+    })
   ],
-  providers: [],
+  providers: [
+    LandingPageService,
+    IntlService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

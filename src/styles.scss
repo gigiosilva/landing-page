@@ -1,5 +1,7 @@
 
-html, body { height: 100%; }
+html, body { 
+    height: calc(100vh); 
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .registerForm{
     .mat-form-field-infix{
