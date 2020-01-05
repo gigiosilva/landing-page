@@ -1,7 +1,7 @@
 import { LandingPageService } from './landing-page/landing-page.service';
 import { IntlService } from './intl.service';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HttpClientJsonpModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
@@ -34,6 +34,7 @@ import { LoaderComponent } from './shared/loader/loader.component';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     AppRoutingModule,
     FormsModule,
     MatCheckboxModule,

@@ -1,0 +1,26 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$my-primary: (
+  50: #2979FF,
+  contrast: (
+        50 : #000000,
+  )
+);
+$my-accent: (
+  50: #FFF,
+  contrast: (
+        50 : #000000,
+  )
+);
+ 
+//the first two are the custom palettes we declared above
+$my-theme-primary: mat-palette($my-primary, 50);
+$my-theme-accent: mat-palette($my-accent, 50);
+//the third, for the warn color, is the predefined material red palette
+$my-theme-warn: mat-palette($mat-red);
+ 
+$my-theme: mat-light-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
+ 
+@include angular-material-theme($my-theme);

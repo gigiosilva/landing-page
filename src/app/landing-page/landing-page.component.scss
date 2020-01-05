@@ -89,10 +89,14 @@ footer{
         font-size: 5em;
     }
 }
-// .mat-button-toggle-checked{
-//     background-color: #2979FF;
-//     color: white;
-// } 
+.mat-button-toggle-checked{
+    background-color: #2979FF;
+    color: white;
+}
+.aware-text {
+    padding-top: 10px;
+    color: red;
+}
 @media (max-width: 767px){
     section {
         height: 100%;

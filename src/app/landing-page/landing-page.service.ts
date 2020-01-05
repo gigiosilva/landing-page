@@ -12,6 +12,10 @@ export class LandingPageService {
   headers: HttpHeaders;
   url: string = environment.apiUrl + '/business';
   contactUrl: string = environment.apiUrl + '/contact';
+  zipCodeUrl: string = environment.zipCodeUrl;
+  addressUrl: string = environment.addressUrl;
+  addressKey: string = environment.addressKey;
+  callback: string = window.location.origin;
   token: string;
   
   constructor(
@@ -28,7 +32,23 @@ export class LandingPageService {
     return this.http.get(this.url + `/${idBusiness}/landing-setting`, { headers: this.headers });
   }
 
-  public saveContact(contact): Observable<any> {
-    return this.http.post(this.contactUrl, { ...contact }, { headers: this.headers });
+  public saveContact(idBusiness, contact): Observable<any> {
+    return this.http.post(this.contactUrl, { ...contact, idBusiness }, { headers: this.headers });
+  }
+
+  public getAddressByZipCode(zipCode): Observable<any> {
+    return this.http.get(this.zipCodeUrl + `/${zipCode}/json`);
+  }
+
+  public getCountries(): Observable<any> {
+    return this.http.jsonp(this.addressUrl + `/country/all/?key=${this.addressKey}`, 'callback');
+  }
+
+  public getRegions(country): Observable<any> {
+    return this.http.jsonp(this.addressUrl + `/region/${country}/all/?key=${this.addressKey}`, 'callback');
+  }
+
+  public getCities(region, country): Observable<any> {
+    return this.http.jsonp(this.addressUrl + `/city/${country}/search/?region=${region}&key=${this.addressKey}`, 'callback');
   }
 }

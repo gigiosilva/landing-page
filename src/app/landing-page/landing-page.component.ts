@@ -18,9 +18,12 @@ export class LandingPageComponent implements OnInit {
   private idBusiness: number;
   public backgroundImage = null;
   public settings: any = {};
-  public designFields: any = {};
+  public designFields: Object = new Object();
   public loading = true;
   public completed = false;
+  public acceptedTerms: boolean = false;
+
+  public country;
 
   constructor(
     @Inject(DOCUMENT) public _document: HTMLDocument, 
@@ -50,7 +53,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   setPageIcon() {
-    this._document.getElementById('appFavicon').setAttribute('href', this.designFields["icon"].link);
+    this._document.getElementById('appFavicon').setAttribute('href', this.designFields["icon"]["link"]);
   }
 
   generateDesignField() {
@@ -61,15 +64,68 @@ export class LandingPageComponent implements OnInit {
   }
 
   saveContact(form) {
-    console.log(form);
-    this.completed = true;
-    this.restart();
+    if(form.valid && this.acceptedTerms) {
+      form.value.type = "CLIENT";
+      form.value.status = "ACTIVE";
+      form.value.emails = [form.value.emails];
+      form.value.phones = [form.value.phones];
+      this.landingPageService.saveContact(this.idBusiness, form.value).subscribe(res => {
+        console.log('Saved!');
+      });
+      form.reset();
+      this.completed = true;
+      this.restart();
+    }
   }
 
   restart() {
     setTimeout(_=> {
       this.completed = false;
-      location.reload();
     }, 5000);
+  }
+
+  handleZipCode(zipCode) {
+    this.landingPageService.getAddressByZipCode(zipCode).subscribe(address => {
+      this.settings.inputFields.forEach(setting => {
+        if(setting.field.name === 'COUNTRY') {
+          setting.field.options = [{name: 'Brazil'}];
+          setting.text = 'Brazil';
+        }
+        if(setting.field.name === 'STATE') {
+          setting.field.options = [{name: address.uf}];
+          setting.text = address.uf;
+        }
+        if(setting.field.name === 'CITY') {
+          setting.field.options = [{name: address.localidade}];
+          setting.text = address.localidade;
+        }
+        if(setting.field.name === 'ADDRESS') setting.text = `${address.logradouro}, ${address.bairro}`;
+      })
+    });
+  }
+
+  loadAPI(setting, component) {
+    if(setting.field.name == 'COUNTRY') {
+      this.landingPageService.getCountries().subscribe(countries => {
+        this.settings.inputFields.find(setting => setting.field.name === 'COUNTRY').field.options = countries;
+        setTimeout(_=> component.open(), 100);
+      });
+    }
+    if(setting.field.name == 'STATE') {
+      this.country = this.settings.inputFields.find(setting => setting.field.name === 'COUNTRY').text.code;
+
+      this.landingPageService.getRegions(this.country).subscribe(regions => {
+        this.settings.inputFields.find(setting => setting.field.name === 'STATE').field.options = regions;
+        setTimeout(_=> component.open(), 100);
+      });
+    }
+    if(setting.field.name == 'CITY') {
+      let region = this.settings.inputFields.find(setting => setting.field.name === 'STATE').text.region;
+
+      this.landingPageService.getCities(region, this.country).subscribe(cities => {
+        this.settings.inputFields.find(setting => setting.field.name === 'CITY').field.options = cities;
+        setTimeout(_=> component.open(), 100);
+      });
+    }
   }
 }

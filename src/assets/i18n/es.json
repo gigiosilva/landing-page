@@ -33,5 +33,8 @@
   "english": "Inglês",
   "portuguese": "Português",
   "spanish": "Espanhol",
-  "thank_you": "Gracias"
+  "thank_you": "Gracias",
+  "city": "Ciudad",
+  "required_fields": "Por favor complete todos los campos requeridos",
+  "required_terms": "Debes aceptar los términos"
 }
