@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,9 @@ export class IntlService {
 
   constructor(
     private translate: TranslateService,
+    private route: ActivatedRoute
   ) {
-    translate.setDefaultLang('en_US');
+    translate.setDefaultLang(this.route.snapshot.queryParams.language || 'en_US');
   }
 
   getCurrentLanguage () {
