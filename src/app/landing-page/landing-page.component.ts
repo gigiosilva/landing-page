@@ -6,11 +6,21 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { getToken } from '@angular/router/src/utils/preactivation';
 import { IntlService } from '../intl.service';
+import { lightSpeedIn, zoomInDown, fadeOut, bounce } from 'ng-animate';
+import { trigger, transition, useAnimation } from '@angular/animations';
 
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss']
+  styleUrls: ['./landing-page.component.scss'],
+  animations: [
+    trigger('lightSpeedIn', [transition('* => *', useAnimation(lightSpeedIn))]),
+    trigger('zoomInDown', [transition('* => *', useAnimation(zoomInDown))]),
+    trigger('bounce', [transition('* => *', useAnimation(bounce, {
+      params: { timing: 1}
+    }))]),
+    trigger('fadeOut', [transition('* => *', useAnimation(fadeOut))]),
+  ],
 })
 export class LandingPageComponent implements OnInit {
 
@@ -22,6 +32,9 @@ export class LandingPageComponent implements OnInit {
   public loading = true;
   public completed = false;
   public acceptedTerms: boolean = false;
+
+  // Animations
+  public shakeForm = false;
 
   public country;
 
@@ -73,8 +86,11 @@ export class LandingPageComponent implements OnInit {
         console.log('Saved!');
       });
       form.reset();
+      this.acceptedTerms = false;
       this.completed = true;
       this.restart();
+    } else {
+      this.shakeForm = !this.shakeForm;
     }
   }
 
