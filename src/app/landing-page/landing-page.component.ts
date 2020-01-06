@@ -66,6 +66,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   setPageIcon() {
+    this._document.title = this.designFields.title.text;
     this._document.getElementById('appFavicon').setAttribute('href', this.designFields["icon"]["link"]);
   }
 
