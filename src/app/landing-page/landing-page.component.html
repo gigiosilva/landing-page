@@ -1,25 +1,25 @@
 <header [style.background]="designFields.header?.backgroundColor"></header>
 <app-loader *ngIf="loading"></app-loader>
 <div *ngIf="completed" class="thank-you-container" [style.background-color]="designFields?.background?.backgroundColor">
-  <img src="{{ designFields.logo.link }}" alt="logo" *ngIf="designFields.logo.link.length">
-  <h3>{{ 'thank_you' | translate }}!</h3>
+  <img [@lightSpeedIn]="lightSpeedIn" src="{{ designFields.logo.link }}" alt="logo" *ngIf="designFields.logo.link.length">
+  <h3 [@lightSpeedIn]="lightSpeedIn">{{ 'thank_you' | translate }}!</h3>
 </div>
 <section *ngIf="!loading && !completed" class="landingPage" [style.background]="backgroundImage" [style.background-color]="designFields.background?.backgroundColor">
   <div class="topSection col-sm-12">
     <div class="col-sm-12 logo">
       <div class="logoHere">
-        <img src="{{ designFields.logo.link }}" alt="logo" *ngIf="designFields.logo.link.length">
+        <img [@zoomInDown]="zoomInDown" src="{{ designFields.logo.link }}" alt="logo" *ngIf="designFields.logo.link.length">
       </div>
     </div>
   </div>
-  <div class="col-sm-12 mainContent">
+  <div [@zoomInDown]="zoomInDown" class="col-sm-12 mainContent">
     <div class="contentHere">
       <div class="col-sm-12 mainTitle">
         <h3 [style.color]="designFields.title.color" style.font-size="{{designFields.title.size}}px" class="titleHead">{{designFields.title.text}}</h3>
         <p [style.color]="designFields.description.color" style.font-size="{{designFields.description.size}}px">{{designFields.description.text}}</p>
       </div>
       <form name="registerForm" (ngSubmit)="saveContact(f.form)" #f="ngForm">
-        <mat-card class="col-sm-12 mat-elevation-z3">
+        <mat-card [@bounce]="shakeForm" class="col-sm-12 mat-elevation-z3">
           <div class="col-sm-12 registerForm">
             <div class="col-sm-{{field.field.space}}" *ngFor="let field of settings.inputFields">
               <div *ngIf="field.active" class="registerField">
