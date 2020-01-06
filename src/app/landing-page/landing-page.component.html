@@ -15,7 +15,7 @@
   <div [@zoomInDown]="zoomInDown" class="col-sm-12 mainContent">
     <div class="contentHere">
       <div class="col-sm-12 mainTitle">
-        <h3 [style.color]="designFields.title.color" style.font-size="{{designFields.title.size}}px" class="titleHead">{{designFields.title.text}}</h3>
+        <!-- <h3 [style.color]="designFields.title.color" style.font-size="{{designFields.title.size}}px" class="titleHead">{{designFields.title.text}}</h3> -->
         <p [style.color]="designFields.description.color" style.font-size="{{designFields.description.size}}px">{{designFields.description.text}}</p>
       </div>
       <form name="registerForm" (ngSubmit)="saveContact(f.form)" #f="ngForm">
