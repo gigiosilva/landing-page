@@ -1,4 +1,4 @@
-<header [style.background]="designFields.header?.backgroundColor"></header>
+<header [style.background]="designFields?.header?.backgroundColor"></header>
 <app-loader *ngIf="loading"></app-loader>
 <div *ngIf="completed" class="thank-you-container" [style.background-color]="designFields?.background?.backgroundColor">
   <img [@lightSpeedIn]="lightSpeedIn" src="{{ designFields.logo.link }}" alt="logo" *ngIf="designFields.logo.link.length">
@@ -74,4 +74,4 @@
     </div>
   </div>
 </section>
-<footer [style.background-color]="designFields.footer?.backgroundColor"></footer>
+<footer [style.background-color]="designFields?.footer?.backgroundColor"></footer>
