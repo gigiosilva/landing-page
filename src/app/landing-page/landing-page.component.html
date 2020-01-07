@@ -15,7 +15,7 @@
   <div [@zoomInDown]="zoomInDown" class="col-sm-12 mainContent">
     <div class="contentHere">
       <div class="col-sm-12 mainTitle">
-        <p [style.color]="designFields.description.color" style.font-size="{{designFields.description.size}}px">{{designFields.description.text}}</p>
+        <p [style.color]="designFields.description.color" style.font-size="{{designFields.description.size}}px" [ngClass]="{'bold': designFields.description.bold}">{{designFields.description.text}}</p>
       </div>
       <form name="registerForm" (ngSubmit)="saveContact(f.form)" #f="ngForm">
         <mat-card [@bounce]="shakeForm" class="col-sm-12 mat-elevation-z3">
@@ -62,12 +62,12 @@
         </mat-card>
         <div class="col-sm-12 termService">
           <mat-slide-toggle [checked]="acceptedTerms" (change)="acceptedTerms=$event.checked" color="primary">
-            <a href="{{designFields.terms_service.link}}">{{ 'terms_service' | translate }}</a>
+            <a href="{{designFields.terms_service.link}}" target="_blank" >{{ 'terms_service' | translate }}</a>
           </mat-slide-toggle>
           <div *ngIf="f.submitted && !acceptedTerms" class="col-sm-12 aware-text">*{{ 'required_terms' | translate }}</div>
         </div>
         <div class="actionBtn col-sm-12">
-          <button mat-raised-button type="submit" [style.color]="designFields.button.color" [style.background]="designFields.button.backgroundColor" style.font-size="{{designFields.button.size}}px">{{designFields.button.text}}</button>
+          <button mat-raised-button type="submit" [ngClass]="{'bold': designFields.button.bold}" [style.color]="designFields.button.color" [style.background]="designFields.button.backgroundColor" style.font-size="{{designFields.button.size}}px">{{designFields.button.text}}</button>
         </div>
       </form>
     </div>
