@@ -48,7 +48,7 @@ export class LandingPageComponent implements OnInit {
     this.idBusiness = this.route.snapshot.params.id;
     this.translate = this.intlService.getIntl();
   }
-
+  
   ngOnInit() {
     this.landingPageService.getSettings(this.idBusiness).subscribe(settings => {
       this.settings = settings.landingSettings;
@@ -104,18 +104,8 @@ export class LandingPageComponent implements OnInit {
   handleZipCode(zipCode) {
     this.landingPageService.getAddressByZipCode(zipCode).subscribe(address => {
       this.settings.inputFields.forEach(setting => {
-        if(setting.field.name === 'COUNTRY') {
-          setting.field.options = [{name: 'Brazil'}];
-          setting.text = 'Brazil';
-        }
-        if(setting.field.name === 'STATE') {
-          setting.field.options = [{name: address.uf}];
-          setting.text = address.uf;
-        }
-        if(setting.field.name === 'CITY') {
-          setting.field.options = [{name: address.localidade}];
-          setting.text = address.localidade;
-        }
+        if(setting.field.name === 'STATE') setting.text = address.uf;
+        if(setting.field.name === 'CITY') setting.text = address.localidade;
         if(setting.field.name === 'ADDRESS') setting.text = `${address.logradouro}, ${address.bairro}`;
       })
     });

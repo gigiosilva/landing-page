@@ -30,11 +30,13 @@
   "prefer_not": "Prefer Not to Say",
   "address": "Address",
   "language": "Language",
-  "english": "English",
-  "portuguese": "Portuguese",
-  "spanish": "Spanish",
+  "en_us": "English",
+  "pt_br": "Portuguese",
+  "es": "Spanish",
   "thank_you": "Thank you",
   "city": "City",
   "required_fields": "Please fill all required fields",
-  "required_terms": "You have to accept the terms"
+  "required_terms": "You have to accept the terms",
+  "bra": "Brazil",
+  "usa": "United States"
 }

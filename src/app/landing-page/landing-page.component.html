@@ -15,7 +15,6 @@
   <div [@zoomInDown]="zoomInDown" class="col-sm-12 mainContent">
     <div class="contentHere">
       <div class="col-sm-12 mainTitle">
-        <!-- <h3 [style.color]="designFields.title.color" style.font-size="{{designFields.title.size}}px" class="titleHead">{{designFields.title.text}}</h3> -->
         <p [style.color]="designFields.description.color" style.font-size="{{designFields.description.size}}px">{{designFields.description.text}}</p>
       </div>
       <form name="registerForm" (ngSubmit)="saveContact(f.form)" #f="ngForm">
@@ -42,7 +41,7 @@
                 </mat-form-field>
                 <mat-form-field *ngIf="field.field.type === 'API' && field.active && field.field.name !== 'ZIP_CODE'" (click)="loadAPI(field, select)">
                   <mat-label>{{ field.field.name | lowercase | translate }}</mat-label>
-                  <mat-select #select name="{{field.field.property}}" [(ngModel)]="field.text" disabled>
+                  <mat-select #select name="{{field.field.property}}" [(ngModel)]="field.text">
                     <mat-option *ngFor="let option of field.field.options" [value]="option.name">
                       {{option.city || option.name || option.region}}
                     </mat-option>
@@ -51,8 +50,8 @@
                 <mat-form-field *ngIf="field.field.type === 'SELECT' && field.active">
                   <mat-label>{{ field.field.name | lowercase | translate }}</mat-label>
                   <mat-select #select name="{{field.field.property}}" [(ngModel)]="field.text">
-                    <mat-option *ngFor="let option of field.field.options" [value]="option.name">
-                      {{option.name}}
+                    <mat-option *ngFor="let option of field.field.options" [value]="option">
+                      {{ option | lowercase | translate }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
