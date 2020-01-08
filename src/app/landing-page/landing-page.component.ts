@@ -81,8 +81,8 @@ export class LandingPageComponent implements OnInit {
     if(form.valid && this.acceptedTerms) {
       form.value.type = "CLIENT";
       form.value.status = "ACTIVE";
-      form.value.emails = [form.value.emails];
-      form.value.phones = [form.value.phones];
+      form.value.emails = form.value.emails ? [form.value.emails] : [];
+      form.value.phones = form.value.phones ? [form.value.phones] : [];
       this.landingPageService.saveContact(this.idBusiness, form.value).subscribe(res => {
         console.log('Saved!');
       });
