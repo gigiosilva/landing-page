@@ -1,8 +1,14 @@
+.landing-container {
+    height: 100%;
+    display: flex;
+}
+form {
+    width: 100%;
+}
 section{
     float: left;
     width: 100%;
     padding: 50px 0;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,7 +46,6 @@ mat-radio-group{
 .actionBtn{
     text-align: center;
     margin-top: 20px;
-    padding-bottom: 30px;
     button{
         padding: 10px 20px;
         border-radius: 30px;
