@@ -45,6 +45,12 @@
   flex-shrink: 1;
   overflow: auto;
 
+  .logo {
+    img {
+      width: 350px;
+    }
+  }
+
   .form-container {
     width: 100%;
 
@@ -90,6 +96,6 @@
   }
 
   .landing-container * {
-    font-size: 26px !important;
+    font-size: 18px !important;
   }
 }
