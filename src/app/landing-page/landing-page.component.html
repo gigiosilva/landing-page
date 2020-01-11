@@ -1,78 +1,68 @@
 <div class="landing-container" [style.background]="backgroundImage" [style.background-color]="designFields.background?.backgroundColor">
-  <form name="registerForm" (ngSubmit)="saveContact(f.form)" #f="ngForm">
-    <header [style.background]="designFields?.header?.backgroundColor"></header>
-    <app-loader *ngIf="loading"></app-loader>
-    <div *ngIf="completed" class="thank-you-container" [style.background-color]="designFields?.background?.backgroundColor">
-      <img [@lightSpeedIn]="lightSpeedIn" src="{{ designFields.logo.link }}" alt="logo" *ngIf="designFields.logo.link.length">
-      <h3 [@lightSpeedIn]="lightSpeedIn">{{ 'thank_you' | translate }}!</h3>
+  <div class="header" [style.background]="designFields?.header?.backgroundColor"></div>
+  <app-loader *ngIf="loading"></app-loader>
+  <div *ngIf="completed" class="thank-you-container" [style.background-color]="designFields?.background?.backgroundColor">
+    <img [@lightSpeedIn]="lightSpeedIn" src="{{ designFields.logo.link }}" alt="logo" *ngIf="designFields.logo.link.length">
+    <h3 [@lightSpeedIn]="lightSpeedIn">{{ 'thank_you' | translate }}!</h3>
+  </div>
+  <div *ngIf="!loading && !completed" class="content">
+    <div [@zoomInDown]="zoomInDown" class="logo">
+      <img src="{{ designFields.logo.link }}" alt="logo" *ngIf="designFields.logo?.link.length">
     </div>
-    <section *ngIf="!loading && !completed" class="landingPage" [style.background]="backgroundImage" [style.background-color]="designFields.background?.backgroundColor">
-        <div class="topSection col-sm-12">
-          <div class="col-sm-12 logo">
-            <div class="logoHere">
-              <img [@zoomInDown]="zoomInDown" src="{{ designFields.logo.link }}" alt="logo" *ngIf="designFields.logo.link.length">
+    <div class="description">
+      <p [style.color]="designFields.description?.color" style.font-size="{{designFields.description?.size}}px" [ngClass]="{'bold': designFields.description?.bold}">{{designFields.description?.text}}</p>
+    </div>
+    <div [@bounce]="shakeForm" class="form-container">
+      <mat-card class="mat-elevation-z3">      
+        <form name="registerForm" id="form1" (ngSubmit)="saveContact(f.form)" #f="ngForm">
+          <div *ngFor="let field of settings.inputFields">
+            <mat-form-field *ngIf="field.field.type === 'TEXT' && field.active" class="col-sm-{{field.field.space}}">
+              <input matInput placeholder="{{ field.field.name  | lowercase | translate }}" name="{{field.field.property}}" [(ngModel)]="field.text" [required]="field.required">
+            </mat-form-field>
+            <mat-form-field *ngIf="field.field.name === 'ZIP_CODE' && field.active" class="col-sm-{{field.field.space}}">
+              <input matInput placeholder="{{ field.field.name  | lowercase | translate }}" name="{{field.field.property}}" [(ngModel)]="field.text" (blur)="handleZipCode(field.text)">
+            </mat-form-field>
+            <mat-form-field *ngIf="field.field.type === 'DATEPICKER' && field.active" class="col-sm-{{field.field.space}}" (click)="picker.open()">
+              <input matInput [matDatepicker]="picker" placeholder="{{ field.field.name | lowercase | translate }}" name="{{field.field.property}}" [(ngModel)]="field.text">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field *ngIf="field.field.type === 'API' && field.active && field.field.name !== 'ZIP_CODE'" class="col-sm-{{field.field.space}}" (click)="loadAPI(field, select)">
+              <mat-label>{{ field.field.name | lowercase | translate }}</mat-label>
+              <mat-select #select name="{{field.field.property}}" [(ngModel)]="field.text">
+                <mat-option *ngFor="let option of field.field.options" [value]="option.name">
+                  {{option.city || option.name || option.region}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="field.field.type === 'SELECT' && field.active" class="col-sm-{{field.field.space}}">
+              <mat-label>{{ field.field.name | lowercase | translate }}</mat-label>
+              <mat-select #select name="{{field.field.property}}" [(ngModel)]="field.text">
+                <mat-option *ngFor="let option of field.field.options" [value]="option">
+                  {{ option | lowercase | translate }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="field.field.type === 'RADIO' && field.active" class="col-sm-{{field.field.space}}">
+              <div>{{ field.field.name | lowercase | translate }}</div>
+              <mat-button-toggle-group *ngIf="field.field.type === 'RADIO' && field.active" aria-label="Font Style" [(ngModel)]="field.text" name="{{field.field.property}}">
+                <mat-button-toggle appearance="primary" *ngFor="let option of field.field.options" value="{{option}}">{{ option | lowercase | translate }}</mat-button-toggle>
+              </mat-button-toggle-group>
             </div>
           </div>
-        </div>
-        <div [@zoomInDown]="zoomInDown" class="col-sm-12 mainContent">
-          <div class="contentHere">
-            <div class="col-sm-12 mainTitle">
-              <p [style.color]="designFields.description.color" style.font-size="{{designFields.description.size}}px" [ngClass]="{'bold': designFields.description.bold}">{{designFields.description.text}}</p>
-            </div>
-            <mat-card [@bounce]="shakeForm" class="col-sm-12 mat-elevation-z3">
-              <div class="col-sm-12 registerForm">
-                <div class="col-sm-{{field.field.space}}" *ngFor="let field of settings.inputFields">
-                  <div *ngIf="field.active" class="registerField">
-                    <div *ngIf="field.field.type === 'RADIO' && field.active">
-                      <div>{{ field.field.name | lowercase | translate }}</div>
-                      <mat-button-toggle-group *ngIf="field.field.type === 'RADIO' && field.active" aria-label="Font Style" [(ngModel)]="field.text" name="{{field.field.property}}">
-                        <mat-button-toggle appearance="primary" *ngFor="let option of field.field.options" value="{{option}}">{{ option | lowercase | translate }}</mat-button-toggle>
-                      </mat-button-toggle-group>
-                    </div>
-                    <mat-form-field *ngIf="field.field.type === 'TEXT' && field.active">
-                      <input matInput placeholder="{{ field.field.name  | lowercase | translate }}" name="{{field.field.property}}" [(ngModel)]="field.text" [required]="field.required">
-                    </mat-form-field>
-                    <mat-form-field *ngIf="field.field.name === 'ZIP_CODE' && field.active">
-                      <input matInput placeholder="{{ field.field.name  | lowercase | translate }}" name="{{field.field.property}}" [(ngModel)]="field.text" (blur)="handleZipCode(field.text)">
-                    </mat-form-field>
-                    <mat-form-field *ngIf="field.field.type === 'DATEPICKER' && field.active" (click)="picker.open()">
-                      <input matInput [matDatepicker]="picker" placeholder="{{ field.field.name | lowercase | translate }}" name="{{field.field.property}}" [(ngModel)]="field.text">
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
-                    </mat-form-field>
-                    <mat-form-field *ngIf="field.field.type === 'API' && field.active && field.field.name !== 'ZIP_CODE'" (click)="loadAPI(field, select)">
-                      <mat-label>{{ field.field.name | lowercase | translate }}</mat-label>
-                      <mat-select #select name="{{field.field.property}}" [(ngModel)]="field.text">
-                        <mat-option *ngFor="let option of field.field.options" [value]="option.name">
-                          {{option.city || option.name || option.region}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-form-field *ngIf="field.field.type === 'SELECT' && field.active">
-                      <mat-label>{{ field.field.name | lowercase | translate }}</mat-label>
-                      <mat-select #select name="{{field.field.property}}" [(ngModel)]="field.text">
-                        <mat-option *ngFor="let option of field.field.options" [value]="option">
-                          {{ option | lowercase | translate }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div *ngIf="f.submitted && !f.form.valid" class="col-sm-12 aware-text">*{{ 'required_fields' | translate }}</div>
-              </div>
-            </mat-card>
-            <div class="col-sm-12 termService">
-              <mat-slide-toggle [checked]="acceptedTerms" (change)="acceptedTerms=$event.checked" color="primary">
-                <a href="{{designFields.terms_service.link}}" target="_blank" >{{ 'terms_service' | translate }}</a>
-              </mat-slide-toggle>
-              <div *ngIf="f.submitted && !acceptedTerms" class="col-sm-12 aware-text">*{{ 'required_terms' | translate }}</div>
-            </div>
-            <div class="actionBtn col-sm-12">
-              <button mat-raised-button type="submit" [ngClass]="{'bold': designFields.button.bold}" [style.color]="designFields.button.color" [style.background]="designFields.button.backgroundColor" style.font-size="{{designFields.button.size}}px">{{designFields.button.text}}</button>
-            </div>
-          </div>
-        </div>
-      </section>
-      <footer [style.background-color]="designFields?.footer?.backgroundColor"></footer>
-    </form>
+        </form> 
+        <div *ngIf="f.submitted && !f.form.valid" class="col-sm-12 aware-text">*{{ 'required_fields' | translate }}</div>
+      </mat-card>
+    </div>
+    <div class="terms-container">
+      <mat-slide-toggle [checked]="acceptedTerms" (change)="acceptedTerms=$event.checked" color="primary">
+        <a href="{{designFields.terms_service?.link}}" target="_blank" >{{ 'terms_service' | translate }}</a>
+      </mat-slide-toggle>
+      <div *ngIf="f.submitted && !acceptedTerms" class="aware-text">*{{ 'required_terms' | translate }}</div>
+    </div>
+    <div class="button-container">
+      <button mat-raised-button type="submit" form="form1" [ngClass]="{'bold': designFields.button?.bold}" [style.color]="designFields.button?.color" [style.background]="designFields.button?.backgroundColor" style.font-size="{{designFields.button?.size}}px">{{designFields.button?.text}}</button>
+    </div>
+  </div>
+  <div class="footer" [style.background-color]="designFields?.footer?.backgroundColor"></div>
 </div>
