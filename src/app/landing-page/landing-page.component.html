@@ -10,7 +10,7 @@
       <img src="{{ designFields.logo.link }}" alt="logo" *ngIf="designFields.logo?.link.length">
     </div>
     <div class="description">
-      <p [style.color]="designFields.description?.color" style.font-size="{{designFields.description?.size}}px" [ngClass]="{'bold': designFields.description?.bold}">{{designFields.description?.text}}</p>
+      <div [style.color]="designFields.description?.color" style.font-size="{{designFields.description?.size}}px" [ngClass]="{'bold': designFields.description?.bold}">{{designFields.description?.text}}</div>
     </div>
     <div [@bounce]="shakeForm" class="form-container">
       <mat-card class="mat-elevation-z3">      

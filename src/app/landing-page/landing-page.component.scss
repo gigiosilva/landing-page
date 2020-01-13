@@ -37,22 +37,31 @@
 .content {
   width: 100%;
   padding: 0 25%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  flex-shrink: 1;
+  margin: auto 0;
   overflow: auto;
 
   .logo {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+
     img {
       width: 162px;
     }
   }
 
+  .description {
+    display: flex;
+    justify-content: center;
+  }
+
   .form-container {
     width: 100%;
+
+    // form > * {
+    //   padding-left: 15px;
+    //   padding-right: 15px;
+    // }
 
     mat-card {
       display: inline-block;
@@ -76,6 +85,8 @@
   }
 
   .button-container {
+    display: flex;
+    justify-content: center;
     padding-bottom: 20px;
   }
 }
@@ -93,6 +104,22 @@
 
   .content {
     padding: 0 35px;
+  }
+
+  .landing-container * {
+    font-size: 18px !important;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+
+  .content {
+    padding: 0 10px;
+
+    form > *, form > * * {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 
   .landing-container * {
